@@ -2,114 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pardle Gameplay Mockups</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Pardle - Word Golf</title>
   <style>
     :root {
-      --bg: #000000;
+      --bg: #0a0a0a;
       --bg-card: #1c1c1e;
-      --bg-card-elevated: #2c2c2e;
-      --text: #f5f5f5;
-      --text-muted: #8e8e93;
-      --accent: #ff9800;
-      --accent-soft: rgba(255, 152, 0, 0.20);
-      --green: #00c853;
-      --green-soft: rgba(0, 200, 83, 0.15);
+      --bg-elevated: #2c2c2e;
+      --text: #ffffff;
+      --text-secondary: #8e8e93;
+      --accent: #ff9500;
+      --accent-soft: rgba(255, 149, 0, 0.15);
+      --green: #30d158;
+      --green-soft: rgba(48, 209, 88, 0.15);
       --red: #ff453a;
-      --border-soft: #38383a;
-      --yellow: #ffcc00;
+      --red-soft: rgba(255, 69, 58, 0.15);
+      --yellow: #ffd60a;
+      --yellow-soft: rgba(255, 214, 10, 0.15);
+      --blue: #0a84ff;
+      --gray: #48484a;
+      --gray-light: #636366;
+      --letter-correct: #30d158;
+      --letter-present: #ffd60a;
+      --letter-absent: #3a3a3c;
+      --safe-top: env(safe-area-inset-top, 20px);
+      --safe-bottom: env(safe-area-inset-bottom, 20px);
     }
 
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      margin: 0;
-      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Concept Tabs */
-    .concept-tabs {
-      display: flex;
-      background: var(--bg-card);
-      border-bottom: 0.5px solid var(--border-soft);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 8px 8px 0;
-      gap: 4px;
-    }
-
-    .concept-tab {
-      flex: 1;
-      padding: 10px 8px;
-      border: none;
-      background: none;
-      color: var(--text-muted);
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-    }
-
-    .concept-tab.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .concept-page {
-      display: none;
-      padding: 16px;
-      max-width: 400px;
+    .app {
+      max-width: 500px;
       margin: 0 auto;
-    }
-
-    .concept-page.active {
-      display: block;
-    }
-
-    .concept-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--accent);
-    }
-
-    .concept-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
-    /* Shared Components */
-    .phone-frame {
-      background: var(--bg);
-      border: 2px solid var(--border-soft);
-      border-radius: 24px;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .app-header {
+      min-height: 100dvh;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: var(--bg-card);
+      flex-direction: column;
+      padding-top: var(--safe-top);
     }
 
-    .app-title {
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--green), var(--accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 20px;
-      font-weight: 800;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
       letter-spacing: -0.5px;
+    }
+
+    .logo-text span {
+      color: var(--accent);
     }
 
     .header-right {
@@ -118,747 +98,1890 @@
       gap: 12px;
     }
 
-    .coin-pill {
+    .coin-display {
       display: flex;
       align-items: center;
-      gap: 4px;
-      background: var(--bg-card-elevated);
-      padding: 5px 12px;
-      border-radius: 16px;
-      font-size: 13px;
+      gap: 6px;
+      background: var(--yellow-soft);
+      padding: 6px 12px;
+      border-radius: 20px;
       font-weight: 600;
+      font-size: 15px;
       color: var(--yellow);
     }
 
-    .icon-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+    .settings-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-card);
       border: none;
-      background: var(--bg-card-elevated);
-      color: var(--text-muted);
-      font-size: 16px;
+      border-radius: 50%;
+      color: var(--text-secondary);
+      font-size: 18px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .game-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: var(--bg-card);
-      margin: 8px;
-      border-radius: 12px;
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      padding-bottom: calc(80px + var(--safe-bottom));
+    }
+
+    /* Course Info */
+    .course-info {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .course-name {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .course-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .hole-card {
-      background: var(--bg-card);
-      margin: 8px;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-
-    .hole-label {
-      font-size: 11px;
-      color: var(--text-muted);
+      font-size: 14px;
+      color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 4px;
     }
 
-    .hole-number {
-      font-size: 64px;
-      font-weight: 800;
-      color: var(--green);
-      line-height: 1;
+    .hole-indicator {
+      font-size: 28px;
+      font-weight: 700;
     }
 
-    .hole-of {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
+    .hole-indicator span {
+      color: var(--text-secondary);
+      font-weight: 400;
     }
 
-    .hole-stats {
+    /* Score Summary */
+    .score-summary {
       display: flex;
       justify-content: center;
-      gap: 32px;
+      gap: 24px;
+      margin-bottom: 24px;
     }
 
-    .hole-stat {
+    .score-item {
       text-align: center;
     }
 
-    .hole-stat-value {
+    .score-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .score-value {
       font-size: 24px;
       font-weight: 700;
     }
 
-    .hole-stat-value.timer {
-      color: var(--green);
-      font-variant-numeric: tabular-nums;
+    .score-value.under { color: var(--green); }
+    .score-value.over { color: var(--red); }
+    .score-value.even { color: var(--text-secondary); }
+
+    /* Wordle Grid */
+    .wordle-container {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
-    .hole-stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .chat-fab {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--green);
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
+    .par-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-    }
-
-    .chat-fab svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-    }
-
-    .section-label {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-align: center;
-      margin: 16px 0 8px;
-    }
-
-    .score-buttons {
-      display: flex;
       gap: 6px;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 0 8px;
-    }
-
-    .score-btn {
-      width: 48px;
-      height: 48px;
+      background: var(--bg-elevated);
+      padding: 6px 14px;
       border-radius: 12px;
-      border: 1.5px solid var(--border-soft);
-      background: var(--bg-card);
-      color: var(--text);
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
+      margin-bottom: 16px;
     }
 
-    .score-btn:active {
-      transform: scale(0.95);
-    }
+    .par-badge .flag { color: var(--accent); }
 
-    .score-btn.selected {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .score-btn.under-par {
-      border-color: var(--green);
-      background: var(--green-soft);
-      color: var(--green);
-    }
-
-    .primary-btn {
-      width: calc(100% - 16px);
-      margin: 16px 8px;
-      padding: 16px;
-      border: none;
-      border-radius: 14px;
-      background: var(--accent);
-      color: #000;
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.1s;
-    }
-
-    .primary-btn:active {
-      transform: scale(0.98);
-      opacity: 0.9;
-    }
-
-    .primary-btn:disabled {
-      opacity: 0.35;
-    }
-
-    .primary-btn.green {
-      background: var(--green);
-    }
-
-    .secondary-btn {
-      width: calc(100% - 16px);
-      margin: 0 8px 16px;
-      padding: 14px;
-      border: 1.5px solid var(--border-soft);
-      border-radius: 14px;
-      background: none;
-      color: var(--text);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* Concept A Specific */
-    .confidence-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px;
-      margin: 12px 8px;
-      background: var(--bg-card);
-      border-radius: 12px;
-      border: 1.5px solid var(--border-soft);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .confidence-toggle.active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .confidence-toggle .bolt {
-      font-size: 20px;
-    }
-
-    .confidence-toggle .label {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .confidence-toggle .hint {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .confidence-toggle.active .hint {
-      color: var(--accent);
-    }
-
-    /* Concept B Specific */
-    .tap-hint {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin: 8px 0 4px;
-    }
-
-    .score-btn-b {
-      width: 48px;
-      height: 56px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border-soft);
-      background: var(--bg-card);
-      color: var(--text);
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
+    .wordle-grid {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 2px;
+      gap: 8px;
+      margin-bottom: 20px;
     }
 
-    .score-btn-b .boost-indicator {
-      font-size: 10px;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-
-    .score-btn-b.boosted {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .score-btn-b.boosted .boost-indicator {
-      opacity: 1;
-    }
-
-    /* Concept D Specific */
-    .result-display {
-      text-align: center;
-      padding: 24px;
-      background: var(--bg-card);
-      margin: 8px;
-      border-radius: 16px;
-    }
-
-    .result-label {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .result-score {
-      font-size: 48px;
-      font-weight: 800;
-      color: var(--green);
-      margin-bottom: 4px;
-    }
-
-    .result-score.over {
-      color: var(--red);
-    }
-
-    .result-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .choice-buttons {
+    .wordle-row {
       display: flex;
-      gap: 10px;
-      padding: 0 8px;
-      margin-top: 16px;
+      gap: 8px;
     }
 
-    .choice-btn {
-      flex: 1;
-      padding: 16px 12px;
-      border-radius: 14px;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .choice-btn.keep {
-      background: var(--bg-card-elevated);
-      color: var(--text);
-      border: 1.5px solid var(--border-soft);
-    }
-
-    .choice-btn.double {
-      background: linear-gradient(135deg, var(--accent), #ff6d00);
-      color: #000;
-    }
-
-    .choice-btn .sub {
-      display: block;
-      font-size: 11px;
-      font-weight: 500;
-      margin-top: 4px;
-      opacity: 0.7;
-    }
-
-    /* Pros/Cons */
-    .pros-cons {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .pros, .cons {
-      flex: 1;
-      padding: 12px;
+    .wordle-tile {
+      width: 56px;
+      height: 56px;
+      border: 2px solid var(--gray);
       border-radius: 10px;
-      font-size: 12px;
-    }
-
-    .pros {
-      background: rgba(0, 200, 83, 0.1);
-      border: 1px solid rgba(0, 200, 83, 0.3);
-    }
-
-    .cons {
-      background: rgba(255, 69, 58, 0.1);
-      border: 1px solid rgba(255, 69, 58, 0.3);
-    }
-
-    .pros-title, .cons-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .pros-title { color: var(--green); }
-    .cons-title { color: var(--red); }
-
-    .pros ul, .cons ul {
-      margin: 0;
-      padding-left: 16px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* Flow diagram */
-    .flow {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin: 12px 0;
-      font-size: 11px;
-      color: var(--text-muted);
+      font-size: 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.1s ease;
+      background: transparent;
     }
 
-    .flow-step {
+    .wordle-tile.filled {
+      border-color: var(--gray-light);
+      animation: pop 0.1s ease;
+    }
+
+    .wordle-tile.correct {
+      background: var(--letter-correct);
+      border-color: var(--letter-correct);
+      color: #000;
+    }
+
+    .wordle-tile.present {
+      background: var(--letter-present);
+      border-color: var(--letter-present);
+      color: #000;
+    }
+
+    .wordle-tile.absent {
+      background: var(--letter-absent);
+      border-color: var(--letter-absent);
+    }
+
+    .wordle-tile.reveal {
+      animation: flip 0.5s ease forwards;
+    }
+
+    @keyframes pop {
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes flip {
+      0% { transform: rotateX(0); }
+      50% { transform: rotateX(90deg); }
+      100% { transform: rotateX(0); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    .shake {
+      animation: shake 0.4s ease;
+    }
+
+    /* Keyboard */
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .keyboard-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .key {
+      min-width: 32px;
+      height: 52px;
+      background: var(--bg-elevated);
+      border: none;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      transition: all 0.1s ease;
+      padding: 0 12px;
+    }
+
+    .key:active {
+      transform: scale(0.95);
+      opacity: 0.8;
+    }
+
+    .key.wide {
+      min-width: 56px;
+      font-size: 13px;
+    }
+
+    .key.correct { background: var(--letter-correct); color: #000; }
+    .key.present { background: var(--letter-present); color: #000; }
+    .key.absent { background: var(--gray); color: var(--text-secondary); }
+
+    /* Double Down Phase */
+    .double-down-container {
+      display: none;
+      text-align: center;
+    }
+
+    .double-down-container.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-display {
+      margin-bottom: 24px;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 32px;
+      border-radius: 16px;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .result-badge.eagle { background: var(--yellow-soft); color: var(--yellow); }
+    .result-badge.birdie { background: var(--green-soft); color: var(--green); }
+    .result-badge.par { background: var(--bg-elevated); color: var(--text-secondary); }
+    .result-badge.bogey { background: var(--accent-soft); color: var(--accent); }
+    .result-badge.double-bogey { background: var(--red-soft); color: var(--red); }
+
+    .result-description {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .double-down-options {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .dd-btn {
+      flex: 1;
+      max-width: 160px;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .dd-btn:active {
+      transform: scale(0.97);
+    }
+
+    .dd-btn.keep {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    .dd-btn.double {
+      background: linear-gradient(135deg, var(--accent), #ff6b00);
+      color: #000;
+    }
+
+    .dd-btn.double.risky {
+      background: linear-gradient(135deg, var(--red), #cc0000);
+      color: #fff;
+    }
+
+    .dd-subtitle {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    /* Hole Complete */
+    .hole-complete {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hole-complete.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .complete-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .complete-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .complete-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .next-hole-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .next-hole-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Scorecard */
+    .scorecard {
       background: var(--bg-card);
-      padding: 6px 10px;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .scorecard-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .sc-cell {
+      text-align: center;
+      padding: 8px 4px;
       border-radius: 6px;
+    }
+
+    .sc-header {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .sc-par {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+    }
+
+    .sc-score {
       font-weight: 600;
     }
 
-    .flow-arrow {
+    .sc-score.eagle { background: var(--yellow-soft); color: var(--yellow); }
+    .sc-score.birdie { background: var(--green-soft); color: var(--green); }
+    .sc-score.par { background: var(--bg-elevated); color: var(--text); }
+    .sc-score.bogey { background: var(--accent-soft); color: var(--accent); }
+    .sc-score.double-bogey { background: var(--red-soft); color: var(--red); }
+    .sc-score.pending { color: var(--text-secondary); }
+
+    .sc-doubled {
+      position: relative;
+    }
+
+    .sc-doubled::after {
+      content: "⚡";
+      position: absolute;
+      top: -2px;
+      right: 2px;
+      font-size: 8px;
+    }
+
+    /* Tab Bar */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(28, 28, 30, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--gray);
+      padding-bottom: var(--safe-bottom);
+    }
+
+    .tab-bar-inner {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+    }
+
+    .tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 10px;
+      cursor: pointer;
+      padding: 4px 16px;
+      transition: all 0.15s ease;
+    }
+
+    .tab.active {
       color: var(--accent);
+    }
+
+    .tab-icon {
+      font-size: 24px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: calc(var(--safe-top) + 60px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: var(--bg-elevated);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: var(--red);
+    }
+
+    .toast.success {
+      background: var(--green);
+      color: #000;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 32px 24px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-text {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .modal-btn:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-btn.primary {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .modal-btn.secondary {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    /* Stats Screen */
+    .stats-screen {
+      display: none;
+      padding: 20px;
+    }
+
+    .stats-screen.active {
+      display: block;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .distribution-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .distribution-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .dist-label {
+      width: 20px;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .dist-bar {
+      flex: 1;
+      height: 24px;
+      background: var(--bg-card);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .dist-fill {
+      height: 100%;
+      background: var(--gray-light);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      min-width: 24px;
+      transition: width 0.5s ease;
+    }
+
+    .dist-fill.highlight {
+      background: var(--green);
+      color: #000;
+    }
+
+    /* Course Select */
+    .course-select-screen {
+      display: none;
+      padding: 20px;
+    }
+
+    .course-select-screen.active {
+      display: block;
+    }
+
+    .course-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 2px solid transparent;
+    }
+
+    .course-card:active {
+      transform: scale(0.98);
+    }
+
+    .course-card.selected {
+      border-color: var(--accent);
+    }
+
+    .course-card-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .course-card-info {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Game Over Screen */
+    .game-over-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .game-over-screen.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .trophy-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .final-score {
+      font-size: 64px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .final-score.under { color: var(--green); }
+    .final-score.over { color: var(--red); }
+    .final-score.even { color: var(--text-secondary); }
+
+    .final-label {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .coins-earned {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow-soft);
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--yellow);
+      margin-bottom: 32px;
+    }
+
+    .new-round-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
   </style>
 </head>
 <body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">⛳</div>
+        <div class="logo-text">Par<span>dle</span></div>
+      </div>
+      <div class="header-right">
+        <div class="coin-display">
+          <span>🪙</span>
+          <span id="coin-count">500</span>
+        </div>
+        <button class="settings-btn" onclick="showStats()">📊</button>
+      </div>
+    </header>
 
-  <div class="concept-tabs">
-    <button class="concept-tab active" onclick="showConcept('a')">A: Post-Play Bet</button>
-    <button class="concept-tab" onclick="showConcept('b')">B: One-Tap</button>
-    <button class="concept-tab" onclick="showConcept('d')">C: Double Down</button>
-  </div>
+    <main class="main" id="main-content">
+      <!-- Play Screen -->
+      <div id="play-screen">
+        <div class="course-info">
+          <div class="course-name" id="course-name">St. Androos Links</div>
+          <div class="hole-indicator">Hole <span id="current-hole">1</span> <span>of 18</span></div>
+        </div>
 
-  <!-- CONCEPT A: Post-Play Confidence Bet -->
-  <div id="concept-a" class="concept-page active">
-    <div class="concept-title">Option A: Post-Play Confidence Bet</div>
-    <div class="concept-desc">
-      Play Wordle first, then enter your score. Optionally add a Confidence Bet before submitting to amplify your result.
-    </div>
+        <div class="score-summary">
+          <div class="score-item">
+            <div class="score-label">Total</div>
+            <div class="score-value" id="total-strokes">0</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">vs Par</div>
+            <div class="score-value even" id="vs-par">E</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">Doubled</div>
+            <div class="score-value" id="double-count">0</div>
+          </div>
+        </div>
 
-    <div class="flow">
-      <span class="flow-step">Play Wordle</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Enter Score</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Bet? (optional)</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Submit</span>
-    </div>
+        <div class="wordle-container" id="wordle-container">
+          <div class="par-badge">
+            <span class="flag">⛳</span>
+            <span>Par <span id="current-par">4</span></span>
+          </div>
 
-    <div class="phone-frame">
-      <div class="app-header">
-        <div class="app-title">Pardle</div>
-        <div class="header-right">
-          <div class="coin-pill">🪙 250</div>
-          <button class="icon-btn">⚙</button>
+          <div class="wordle-grid" id="wordle-grid"></div>
+
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+
+        <div class="double-down-container" id="double-down-container">
+          <div class="result-display">
+            <div class="result-badge" id="result-badge">BIRDIE!</div>
+            <div class="result-description" id="result-description">You scored 3 on a Par 4</div>
+          </div>
+
+          <div class="double-down-options">
+            <button class="dd-btn keep" onclick="keepScore()">
+              Keep It
+              <div class="dd-subtitle" id="keep-subtitle">−1 stroke</div>
+            </button>
+            <button class="dd-btn double" id="double-btn" onclick="doubleDown()">
+              ⚡ Double
+              <div class="dd-subtitle" id="double-subtitle">−2 strokes</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="hole-complete" id="hole-complete">
+          <div class="complete-icon" id="complete-icon">🎯</div>
+          <div class="complete-title" id="complete-title">Nice Shot!</div>
+          <div class="complete-subtitle" id="complete-subtitle">Your score has been recorded</div>
+          <button class="next-hole-btn" onclick="nextHole()">Next Hole →</button>
+        </div>
+
+        <div class="game-over-screen" id="game-over-screen">
+          <div class="trophy-icon">🏆</div>
+          <div class="final-score" id="final-score">-5</div>
+          <div class="final-label">Final Score</div>
+          <div class="coins-earned" id="coins-earned">
+            <span>🪙</span>
+            <span>+150 coins earned!</span>
+          </div>
+          <button class="new-round-btn" onclick="newRound()">Play New Round</button>
+        </div>
+
+        <div class="scorecard" id="scorecard">
+          <div class="scorecard-title">📋 Scorecard</div>
+          <div class="scorecard-grid" id="scorecard-grid"></div>
         </div>
       </div>
 
-      <div class="game-info">
-        <div>
-          <div class="course-name">Course</div>
-          <div class="course-title">St. Androos Links</div>
+      <!-- Stats Screen -->
+      <div class="stats-screen" id="stats-screen">
+        <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 20px;">Your Statistics</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-played">0</div>
+            <div class="stat-label">Rounds Played</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-best">--</div>
+            <div class="stat-label">Best Round</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-birdies">0</div>
+            <div class="stat-label">Total Birdies</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-eagles">0</div>
+            <div class="stat-label">Total Eagles</div>
+          </div>
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:600;">0/18</div>
-          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
-        </div>
+
+        <div class="distribution-title">Guess Distribution</div>
+        <div id="distribution"></div>
+
+        <button class="modal-btn secondary" style="margin-top: 24px;" onclick="hideStats()">Back to Game</button>
       </div>
 
-      <div class="hole-card">
-        <button class="chat-fab">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      <!-- Course Select Screen -->
+      <div class="course-select-screen" id="course-select-screen">
+        <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Select Course</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">Choose your 18-hole challenge</p>
+        <div id="course-list"></div>
+      </div>
+    </main>
+
+    <nav class="tab-bar">
+      <div class="tab-bar-inner">
+        <button class="tab active" onclick="showTab('play')">
+          <span class="tab-icon">🎯</span>
+          <span>Play</span>
         </button>
-        <div class="hole-label">Today's Hole</div>
-        <div class="hole-number">1</div>
-        <div class="hole-of">of 18</div>
-        <div class="hole-stats">
-          <div class="hole-stat">
-            <div class="hole-stat-value">4</div>
-            <div class="hole-stat-label">Par</div>
-          </div>
-          <div class="hole-stat">
-            <div class="hole-stat-value timer">21:28</div>
-            <div class="hole-stat-label">Time Left</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-label">What did you score?</div>
-
-      <div class="score-buttons">
-        <button class="score-btn">1</button>
-        <button class="score-btn">2</button>
-        <button class="score-btn selected">3</button>
-        <button class="score-btn">4</button>
-        <button class="score-btn">5</button>
-        <button class="score-btn">6</button>
-        <button class="score-btn">7</button>
-      </div>
-
-      <div class="confidence-toggle" onclick="this.classList.toggle('active')">
-        <span class="bolt">⚡</span>
-        <div>
-          <div class="label">Confidence Bet</div>
-          <div class="hint">Double your bonus (or penalty)</div>
-        </div>
-      </div>
-
-      <button class="primary-btn">Submit Score</button>
-    </div>
-
-    <div class="pros-cons">
-      <div class="pros">
-        <div class="pros-title">Pros</div>
-        <ul>
-          <li>No prediction phase</li>
-          <li>Decide AFTER you know your result</li>
-          <li>Familiar golf scoring flow</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <div class="cons-title">Cons</div>
-        <ul>
-          <li>Less "prediction" skill element</li>
-          <li>Players might always bet when under par</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONCEPT B: One-Tap -->
-  <div id="concept-b" class="concept-page">
-    <div class="concept-title">Option B: One-Tap Score Entry</div>
-    <div class="concept-desc">
-      Tap to enter your score normally. Long-press to enter with Confidence Bet. No separate toggle, no phases — just one action.
-    </div>
-
-    <div class="flow">
-      <span class="flow-step">Play Wordle</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Tap or Long-Press</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Done</span>
-    </div>
-
-    <div class="phone-frame">
-      <div class="app-header">
-        <div class="app-title">Pardle</div>
-        <div class="header-right">
-          <div class="coin-pill">🪙 250</div>
-          <button class="icon-btn">⚙</button>
-        </div>
-      </div>
-
-      <div class="game-info">
-        <div>
-          <div class="course-name">Course</div>
-          <div class="course-title">St. Androos Links</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:600;">0/18</div>
-          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
-        </div>
-      </div>
-
-      <div class="hole-card">
-        <button class="chat-fab">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <button class="tab" onclick="showTab('courses')">
+          <span class="tab-icon">⛳</span>
+          <span>Courses</span>
         </button>
-        <div class="hole-label">Today's Hole</div>
-        <div class="hole-number">1</div>
-        <div class="hole-of">of 18</div>
-        <div class="hole-stats">
-          <div class="hole-stat">
-            <div class="hole-stat-value">4</div>
-            <div class="hole-stat-label">Par</div>
-          </div>
-          <div class="hole-stat">
-            <div class="hole-stat-value timer">21:28</div>
-            <div class="hole-stat-label">Time Left</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-label">What did you score?</div>
-      <div class="tap-hint">Tap = normal · Long-press = with ⚡ Confidence Bet</div>
-
-      <div class="score-buttons">
-        <button class="score-btn-b">1</button>
-        <button class="score-btn-b">2</button>
-        <button class="score-btn-b boosted"><span>3</span><span class="boost-indicator">⚡</span></button>
-        <button class="score-btn-b">4</button>
-        <button class="score-btn-b">5</button>
-        <button class="score-btn-b">6</button>
-        <button class="score-btn-b">7</button>
-      </div>
-
-      <div style="text-align:center; margin-top:20px; padding:16px; background:var(--accent-soft); border-radius:12px; margin:16px 8px;">
-        <div style="font-size:13px; color:var(--text-muted);">Score submitted</div>
-        <div style="font-size:24px; font-weight:700; color:var(--green);">Birdie! -1</div>
-        <div style="font-size:13px; color:var(--accent);">⚡ Confidence Bet: -2 total</div>
-      </div>
-    </div>
-
-    <div class="pros-cons">
-      <div class="pros">
-        <div class="pros-title">Pros</div>
-        <ul>
-          <li>Fastest possible flow</li>
-          <li>Single action does everything</li>
-          <li>Very clean UI</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <div class="cons-title">Cons</div>
-        <ul>
-          <li>Long-press not obvious to all users</li>
-          <li>Accidental taps could happen</li>
-          <li>Need confirmation or undo?</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONCEPT D: Double Down -->
-  <div id="concept-d" class="concept-page">
-    <div class="concept-title">Option C: Post-Score Double Down</div>
-    <div class="concept-desc">
-      Enter your score, see your result, THEN decide if you want to "Double Down" and amplify it. Two clear choices: Keep or Double.
-    </div>
-
-    <div class="flow">
-      <span class="flow-step">Play Wordle</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Enter Score</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">See Result</span>
-      <span class="flow-arrow">→</span>
-      <span class="flow-step">Keep or Double</span>
-    </div>
-
-    <div class="phone-frame">
-      <div class="app-header">
-        <div class="app-title">Pardle</div>
-        <div class="header-right">
-          <div class="coin-pill">🪙 250</div>
-          <button class="icon-btn">⚙</button>
-        </div>
-      </div>
-
-      <div class="game-info">
-        <div>
-          <div class="course-name">Course</div>
-          <div class="course-title">St. Androos Links</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:600;">0/18</div>
-          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
-        </div>
-      </div>
-
-      <div class="hole-card">
-        <button class="chat-fab">
-          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <button class="tab" onclick="showTab('stats')">
+          <span class="tab-icon">📊</span>
+          <span>Stats</span>
         </button>
-        <div class="hole-label">Hole 1 Result</div>
-        <div class="hole-number" style="font-size:48px;">Birdie!</div>
-        <div style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">You scored 3 on a Par 4</div>
       </div>
-
-      <div class="result-display">
-        <div class="result-label">Your current score</div>
-        <div class="result-score">-1</div>
-        <div class="result-desc">1 stroke under par</div>
-      </div>
-
-      <div style="padding:0 8px;">
-        <div style="text-align:center; font-size:13px; color:var(--text-muted); margin:12px 0 8px;">What do you want to do?</div>
-        <div class="choice-buttons">
-          <button class="choice-btn keep">
-            Keep It
-            <span class="sub">Lock in -1</span>
-          </button>
-          <button class="choice-btn double">
-            ⚡ Double Down
-            <span class="sub">Risk it for -2</span>
-          </button>
-        </div>
-        <div style="text-align:center; font-size:11px; color:var(--text-muted); margin-top:10px;">
-          Double Down: Doubles bonus if under par, doubles penalty if over
-        </div>
-      </div>
-    </div>
-
-    <div class="pros-cons">
-      <div class="pros">
-        <div class="pros-title">Pros</div>
-        <ul>
-          <li>Crystal clear choices</li>
-          <li>See result before deciding</li>
-          <li>Feels like a casino "double down"</li>
-          <li>Dramatic moment each hole</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <div class="cons-title">Cons</div>
-        <ul>
-          <li>One extra step vs Option A</li>
-          <li>No risk if you always "Keep" when over par</li>
-        </ul>
-      </div>
-    </div>
+    </nav>
   </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
 
   <script>
-    function showConcept(id) {
-      document.querySelectorAll('.concept-page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.concept-tab').forEach(t => t.classList.remove('active'));
-      document.getElementById('concept-' + id).classList.add('active');
-      event.target.classList.add('active');
+    // ============================================
+    // WORD LIST (Common 5-letter words)
+    // ============================================
+    const WORDS = [
+      "about", "above", "abuse", "actor", "acute", "admit", "adopt", "adult", "after", "again",
+      "agent", "agree", "ahead", "alarm", "album", "alert", "alike", "alive", "allow", "alone",
+      "along", "alter", "among", "anger", "angle", "angry", "apart", "apple", "apply", "arena",
+      "argue", "arise", "armor", "army", "aroma", "arose", "array", "arrow", "aside", "asset",
+      "audio", "audit", "avoid", "award", "aware", "awful", "bacon", "badge", "badly", "baker",
+      "bases", "basic", "basis", "batch", "beach", "beard", "beast", "began", "begin", "begun",
+      "being", "belly", "below", "bench", "berry", "birth", "black", "blade", "blame", "blank",
+      "blast", "blaze", "bleed", "blend", "bless", "blind", "block", "blood", "bloom", "blown",
+      "blues", "blunt", "board", "boast", "bonus", "boost", "booth", "border", "bored", "bound",
+      "brain", "brand", "brass", "brave", "bread", "break", "breed", "brick", "bride", "brief",
+      "bring", "broad", "broke", "brook", "brown", "brush", "buddy", "build", "built", "bunch",
+      "burst", "buyer", "cabin", "cable", "cache", "camel", "candy", "cargo", "carry", "carve",
+      "catch", "cause", "cease", "chain", "chair", "chalk", "champ", "chant", "chaos", "charm",
+      "chart", "chase", "cheap", "cheat", "check", "cheek", "cheer", "chess", "chest", "chick",
+      "chief", "child", "chill", "china", "chips", "chord", "chose", "chunk", "civic", "civil",
+      "claim", "clash", "class", "clean", "clear", "clerk", "click", "cliff", "climb", "cling",
+      "clock", "clone", "close", "cloth", "cloud", "clown", "coach", "coast", "colon", "color",
+      "couch", "cough", "could", "count", "court", "cover", "crack", "craft", "crane", "crash",
+      "crawl", "crazy", "cream", "creek", "creep", "crest", "crisp", "cross", "crowd", "crown",
+      "crude", "cruel", "crush", "curve", "cycle", "daily", "dairy", "dance", "dated", "dealt",
+      "death", "debug", "debut", "decay", "decor", "decoy", "delay", "delta", "dense", "depot",
+      "depth", "derby", "desk", "devil", "diary", "digit", "diner", "dirty", "disco", "ditch",
+      "dodge", "doing", "donor", "donut", "doubt", "dough", "dozen", "draft", "drain", "drake",
+      "drama", "drank", "drawn", "dream", "dress", "dried", "drift", "drill", "drink", "drive",
+      "droit", "drown", "drums", "drunk", "dusty", "dwarf", "dwell", "dying", "eager", "eagle",
+      "early", "earth", "eaten", "ebony", "edges", "eerie", "eight", "elbow", "elder", "elect",
+      "elite", "embed", "ember", "empty", "ended", "enemy", "enjoy", "enter", "entry", "equal",
+      "equip", "erase", "error", "essay", "evade", "event", "every", "exact", "exams", "excel",
+      "exile", "exist", "extra", "fable", "faced", "facet", "facts", "faint", "fairy", "faith",
+      "false", "fancy", "fatal", "fatty", "fault", "favor", "feast", "fence", "ferry", "fetal",
+      "fetch", "fever", "fiber", "field", "fiery", "fifth", "fifty", "fight", "final", "finer",
+      "fired", "fires", "firms", "first", "fixed", "flair", "flame", "flash", "flask", "fleet",
+      "flesh", "flies", "float", "flock", "flood", "floor", "flora", "flour", "flown", "fluid",
+      "flush", "flute", "focal", "focus", "foggy", "force", "forge", "forms", "forth", "forty",
+      "forum", "fossil", "foster", "found", "frame", "frank", "fraud", "freak", "freed", "fresh",
+      "front", "frost", "fruit", "fully", "funky", "funny", "fuzzy", "gamma", "gauge", "genre",
+      "ghost", "giant", "given", "gland", "glass", "globe", "gloom", "glory", "gloss", "glove",
+      "grace", "grade", "grain", "grand", "grant", "grape", "graph", "grasp", "grass", "grave",
+      "great", "greed", "greek", "green", "greet", "grief", "grill", "grind", "grips", "gross",
+      "group", "grove", "grown", "guard", "guess", "guest", "guide", "guild", "guilt", "guise",
+      "habit", "hairy", "hands", "handy", "happy", "harsh", "hasn", "haste", "hasty", "hatch",
+      "haven", "heart", "heavy", "hedge", "heels", "hello", "hence", "herbs", "hinge", "hobby",
+      "holds", "holes", "holly", "homes", "honey", "honor", "hoped", "hopes", "horns", "horse",
+      "hotel", "hound", "hours", "house", "human", "humid", "humor", "hurry", "ideal", "ideas",
+      "image", "imply", "inbox", "incur", "index", "indie", "infer", "inner", "input", "intro",
+      "ionic", "irate", "irony", "issue", "items", "ivory", "jeans", "jelly", "jewel", "joins",
+      "joint", "joker", "jolly", "judge", "juice", "jumbo", "jumps", "jumpy", "karma", "kayak",
+      "keeps", "kicks", "kings", "knack", "knead", "kneel", "knees", "knife", "knock", "known",
+      "label", "labor", "lacks", "lakes", "lamps", "lands", "lanes", "lapse", "large", "laser",
+      "lasts", "later", "laugh", "layer", "leads", "leafy", "learn", "lease", "least", "leave",
+      "legal", "lemon", "level", "lever", "light", "liked", "likes", "limbs", "limit", "lined",
+      "linen", "liner", "lines", "links", "lions", "lists", "liter", "liver", "lives", "llama",
+      "loads", "loans", "lobby", "local", "locks", "locus", "lodge", "lofty", "logic", "looks",
+      "loops", "loose", "lords", "lorry", "loser", "loses", "lotus", "loud", "loved", "lover",
+      "loves", "lower", "loyal", "lucky", "lunar", "lunch", "lungs", "lying", "lyric", "macro",
+      "magic", "magma", "major", "maker", "males", "manor", "maple", "march", "marks", "marry",
+      "marsh", "masks", "match", "mates", "maths", "mayor", "meals", "means", "meant", "medal",
+      "media", "melon", "memos", "menus", "mercy", "merge", "merit", "merry", "messy", "metal",
+      "meter", "midst", "might", "miles", "mills", "minds", "miner", "mines", "minor", "minus",
+      "misty", "mixed", "mixer", "model", "modem", "modes", "moist", "molds", "money", "monks",
+      "month", "moods", "moral", "motif", "motor", "motto", "mould", "mount", "mouse", "mouth",
+      "moved", "mover", "moves", "movie", "muddy", "mural", "music", "myths", "nails", "naive",
+      "named", "names", "nanny", "nasal", "nasty", "naval", "needs", "nerve", "never", "newer",
+      "newly", "nexus", "niche", "night", "ninja", "ninth", "noble", "nodes", "noise", "noisy",
+      "north", "notch", "noted", "notes", "novel", "nurse", "nylon", "occur", "ocean", "odds",
+      "offer", "often", "olive", "onion", "onset", "opens", "opera", "opted", "optic", "orbit",
+      "order", "organ", "other", "ought", "ounce", "outer", "owned", "owner", "oxide", "ozone",
+      "packs", "pages", "paint", "pairs", "palms", "panel", "panic", "paper", "parks", "party",
+      "pasta", "paste", "patch", "paths", "patio", "pause", "peace", "peach", "peaks", "pearl",
+      "peers", "penny", "perks", "petal", "petty", "phase", "phone", "photo", "piano", "picks",
+      "piece", "piety", "piggy", "pilot", "pinch", "pints", "pipes", "pitch", "pixel", "pizza",
+      "place", "plain", "plane", "plans", "plant", "plate", "plaza", "plead", "pleas", "plots",
+      "pluck", "plumb", "plume", "plump", "plums", "plunge", "poems", "poets", "point", "poker",
+      "polar", "polls", "ponds", "pools", "porch", "pores", "ports", "posed", "poses", "posts",
+      "pouch", "pound", "power", "prank", "press", "price", "pride", "prime", "print", "prior",
+      "prism", "prize", "probe", "promo", "prone", "proof", "props", "prose", "proud", "prove",
+      "proxy", "prune", "psalm", "pubic", "pulls", "pulse", "pumps", "punch", "pupil", "puppy",
+      "purse", "queen", "query", "quest", "queue", "quick", "quiet", "quilt", "quirk", "quite",
+      "quota", "quote", "racer", "racks", "radar", "radii", "radio", "raids", "rails", "rainy",
+      "raise", "rally", "ranch", "range", "ranks", "rapid", "rates", "ratio", "razor", "reach",
+      "react", "reads", "ready", "realm", "rebel", "refer", "reign", "relax", "relay", "renal",
+      "renew", "repay", "reply", "rerun", "reset", "resin", "retro", "retry", "reuse", "rider",
+      "rides", "ridge", "rifle", "right", "rigid", "rings", "riots", "ripen", "risen", "rises",
+      "risks", "risky", "rival", "river", "roads", "roast", "robot", "rocks", "rocky", "rogue",
+      "roles", "roman", "roofs", "rooms", "roots", "ropes", "roses", "rotor", "rouge", "rough",
+      "round", "route", "royal", "rugby", "ruins", "ruled", "ruler", "rules", "rumor", "rural",
+      "sadly", "safer", "saint", "salad", "sales", "salon", "salsa", "salty", "sands", "sandy",
+      "sauce", "saved", "saves", "scale", "scalp", "scam", "scant", "scare", "scarf", "scary",
+      "scene", "scent", "scope", "score", "scout", "scrap", "seals", "seams", "seats", "seeds",
+      "seeks", "seems", "seize", "sells", "sends", "sense", "serum", "serve", "setup", "seven",
+      "sewer", "shade", "shaft", "shake", "shaky", "shall", "shame", "shape", "share", "shark",
+      "sharp", "sheep", "sheer", "sheet", "shelf", "shell", "shift", "shine", "shiny", "ships",
+      "shirt", "shock", "shoes", "shook", "shoot", "shops", "shore", "short", "shots", "shout",
+      "shown", "shows", "shrug", "sides", "siege", "sight", "sigma", "signs", "silly", "since",
+      "sites", "sixth", "sixty", "sized", "sizes", "skate", "skill", "skins", "skirt", "skull",
+      "slabs", "slack", "slain", "slang", "slate", "slave", "sleek", "sleep", "slice", "slide",
+      "slope", "slots", "small", "smart", "smash", "smell", "smile", "smoke", "smoky", "snake",
+      "snaps", "sneak", "sniff", "solar", "solid", "solve", "songs", "sonic", "sorry", "sorts",
+      "souls", "sound", "south", "space", "spare", "spark", "spawn", "speak", "spear", "specs",
+      "speed", "spell", "spend", "spent", "spice", "spicy", "spill", "spine", "spite", "split",
+      "spoke", "spoon", "sport", "spots", "spray", "squad", "stack", "staff", "stage", "stain",
+      "stake", "stale", "stamp", "stand", "stare", "stark", "stars", "start", "state", "stays",
+      "steak", "steal", "steam", "steel", "steep", "steer", "stems", "steps", "stern", "stick",
+      "stiff", "still", "sting", "stock", "stole", "stone", "stool", "stops", "store", "storm",
+      "story", "stout", "stove", "strap", "straw", "stray", "strip", "stuck", "study", "stuff",
+      "stump", "style", "sugar", "suite", "suits", "sunny", "super", "surge", "sushi", "swamp",
+      "swans", "swear", "sweat", "sweep", "sweet", "swept", "swift", "swim", "swing", "swiss",
+      "sword", "swore", "sworn", "syrup", "table", "tacky", "taken", "takes", "tales", "talks",
+      "tally", "tanks", "tapes", "tasks", "taste", "tasty", "taxes", "teach", "teams", "tears",
+      "teeth", "tempo", "tends", "tenor", "tense", "tenth", "tents", "terms", "tests", "texas",
+      "texts", "thank", "theft", "theme", "there", "these", "thick", "thief", "thigh", "thing",
+      "think", "third", "those", "three", "threw", "throw", "thumb", "tidal", "tiger", "tight",
+      "tiles", "times", "tiny", "tired", "title", "toast", "today", "token", "toned", "tones",
+      "tools", "tooth", "topic", "tops", "torch", "total", "touch", "tough", "tours", "tower",
+      "towns", "toxic", "trace", "track", "tract", "trade", "trail", "train", "trait", "traps",
+      "trash", "treat", "trees", "trend", "trial", "tribe", "trick", "tried", "tries", "trims",
+      "trips", "troll", "troop", "truck", "truly", "trump", "trunk", "trust", "truth", "tubes",
+      "tulip", "tumor", "tuned", "tunes", "turbo", "turns", "tutor", "twice", "twins", "twist",
+      "tying", "types", "ultra", "uncle", "under", "undue", "unfair", "union", "unite", "units",
+      "unity", "until", "upper", "upset", "urban", "urged", "usage", "users", "using", "usual",
+      "utter", "vague", "valid", "value", "valve", "vapor", "vault", "veins", "venue", "verbs",
+      "verge", "verse", "video", "views", "villa", "vinyl", "viola", "viral", "virus", "visit",
+      "vital", "vivid", "vocal", "vodka", "vogue", "voice", "votes", "waged", "wages", "wagon",
+      "waist", "walks", "walls", "waltz", "wanna", "wants", "warns", "waste", "watch", "water",
+      "watts", "waves", "waxed", "weary", "weave", "wedge", "weeds", "weeks", "weigh", "weird",
+      "wells", "welsh", "whale", "wheat", "wheel", "where", "which", "while", "white", "whole",
+      "whose", "widen", "wider", "widow", "width", "wield", "wiped", "wired", "wires", "witch",
+      "wives", "woken", "woman", "women", "woods", "words", "works", "world", "worms", "worry",
+      "worse", "worst", "worth", "would", "wound", "woven", "wreck", "wrist", "write", "wrong",
+      "wrote", "yacht", "yards", "yawns", "years", "yeast", "yield", "young", "yours", "youth",
+      "zebra", "zeros", "zesty", "zonal", "zones"
+    ];
+
+    // ============================================
+    // COURSES
+    // ============================================
+    const COURSES = {
+      "st-andrews": {
+        name: "St. Androos Links",
+        pars: [4, 4, 4, 4, 5, 4, 4, 3, 4, 4, 3, 4, 4, 5, 4, 4, 4, 4]
+      },
+      "augusta": {
+        name: "Azalea National",
+        pars: [4, 5, 4, 3, 4, 3, 4, 5, 4, 4, 4, 3, 5, 4, 5, 3, 4, 4]
+      },
+      "pebble-beach": {
+        name: "Pebble Reach",
+        pars: [4, 5, 4, 4, 3, 5, 3, 4, 4, 4, 4, 3, 4, 5, 4, 4, 3, 5]
+      },
+      "torrey-pines": {
+        name: "Torrey Pints",
+        pars: [4, 4, 3, 4, 5, 4, 4, 3, 5, 4, 3, 4, 5, 4, 4, 3, 4, 5]
+      },
+      "whistling-straits": {
+        name: "Whistling Straights",
+        pars: [4, 5, 3, 4, 5, 4, 3, 4, 4, 4, 5, 3, 4, 4, 4, 5, 3, 4]
+      }
+    };
+
+    // ============================================
+    // GAME STATE
+    // ============================================
+    let gameState = {
+      courseId: "st-andrews",
+      currentHole: 0,
+      scores: Array(18).fill(null),
+      doubled: Array(18).fill(false),
+      coins: 500,
+      stats: {
+        played: 0,
+        bestRound: null,
+        distribution: [0, 0, 0, 0, 0, 0, 0],
+        totalBirdies: 0,
+        totalEagles: 0
+      }
+    };
+
+    // Wordle state
+    let wordleState = {
+      targetWord: "",
+      currentRow: 0,
+      currentTile: 0,
+      guesses: [],
+      gameOver: false,
+      won: false,
+      letterStates: {}
+    };
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+      loadState();
+      renderKeyboard();
+      startNewHole();
+      renderScorecard();
+      renderStats();
+      renderCourseList();
+      updateDisplay();
     }
 
-    // Simulate long-press on concept B
-    document.querySelectorAll('.score-btn-b').forEach(btn => {
-      let timer;
-      btn.addEventListener('touchstart', () => {
-        timer = setTimeout(() => {
-          document.querySelectorAll('.score-btn-b').forEach(b => b.classList.remove('boosted'));
-          btn.classList.add('boosted');
-        }, 500);
-      });
-      btn.addEventListener('touchend', () => clearTimeout(timer));
-      btn.addEventListener('click', () => {
-        if (!btn.classList.contains('boosted')) {
-          document.querySelectorAll('.score-btn-b').forEach(b => b.classList.remove('boosted'));
+    function loadState() {
+      const saved = localStorage.getItem("pardle_state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        gameState = { ...gameState, ...parsed };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem("pardle_state", JSON.stringify(gameState));
+    }
+
+    // ============================================
+    // WORDLE LOGIC
+    // ============================================
+    function startNewHole() {
+      wordleState = {
+        targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
+        currentRow: 0,
+        currentTile: 0,
+        guesses: [],
+        gameOver: false,
+        won: false,
+        letterStates: {}
+      };
+
+      renderGrid();
+      resetKeyboard();
+
+      document.getElementById("wordle-container").style.display = "block";
+      document.getElementById("double-down-container").classList.remove("active");
+      document.getElementById("hole-complete").classList.remove("active");
+      document.getElementById("game-over-screen").classList.remove("active");
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById("wordle-grid");
+      grid.innerHTML = "";
+
+      for (let row = 0; row < 6; row++) {
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "wordle-row";
+        rowDiv.id = `row-${row}`;
+
+        for (let col = 0; col < 5; col++) {
+          const tile = document.createElement("div");
+          tile.className = "wordle-tile";
+          tile.id = `tile-${row}-${col}`;
+          rowDiv.appendChild(tile);
         }
+
+        grid.appendChild(rowDiv);
+      }
+    }
+
+    function renderKeyboard() {
+      const keyboard = document.getElementById("keyboard");
+      const rows = [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+        ["ENTER", "Z", "X", "C", "V", "B", "N", "M", "⌫"]
+      ];
+
+      keyboard.innerHTML = "";
+
+      rows.forEach(row => {
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "keyboard-row";
+
+        row.forEach(key => {
+          const keyBtn = document.createElement("button");
+          keyBtn.className = "key" + (key.length > 1 ? " wide" : "");
+          keyBtn.textContent = key;
+          keyBtn.id = `key-${key}`;
+          keyBtn.onclick = () => handleKeyPress(key);
+          rowDiv.appendChild(keyBtn);
+        });
+
+        keyboard.appendChild(rowDiv);
       });
+    }
+
+    function resetKeyboard() {
+      document.querySelectorAll(".key").forEach(key => {
+        key.classList.remove("correct", "present", "absent");
+      });
+    }
+
+    function handleKeyPress(key) {
+      if (wordleState.gameOver) return;
+
+      if (key === "ENTER") {
+        submitGuess();
+      } else if (key === "⌫") {
+        deleteLetter();
+      } else {
+        addLetter(key);
+      }
+    }
+
+    function addLetter(letter) {
+      if (wordleState.currentTile >= 5) return;
+
+      const tile = document.getElementById(`tile-${wordleState.currentRow}-${wordleState.currentTile}`);
+      tile.textContent = letter;
+      tile.classList.add("filled");
+      wordleState.currentTile++;
+
+      vibrate(10);
+    }
+
+    function deleteLetter() {
+      if (wordleState.currentTile <= 0) return;
+
+      wordleState.currentTile--;
+      const tile = document.getElementById(`tile-${wordleState.currentRow}-${wordleState.currentTile}`);
+      tile.textContent = "";
+      tile.classList.remove("filled");
+
+      vibrate(10);
+    }
+
+    function submitGuess() {
+      if (wordleState.currentTile !== 5) {
+        shakeRow();
+        showToast("Not enough letters", "error");
+        return;
+      }
+
+      const guess = getGuessFromRow();
+
+      // Check if valid word (for simplicity, accept any 5-letter combo)
+      // In production, you'd validate against a dictionary
+
+      wordleState.guesses.push(guess);
+      revealRow(guess);
+    }
+
+    function getGuessFromRow() {
+      let guess = "";
+      for (let i = 0; i < 5; i++) {
+        const tile = document.getElementById(`tile-${wordleState.currentRow}-${i}`);
+        guess += tile.textContent;
+      }
+      return guess;
+    }
+
+    function revealRow(guess) {
+      const target = wordleState.targetWord;
+      const result = evaluateGuess(guess, target);
+
+      for (let i = 0; i < 5; i++) {
+        const tile = document.getElementById(`tile-${wordleState.currentRow}-${i}`);
+
+        setTimeout(() => {
+          tile.classList.add("reveal");
+
+          setTimeout(() => {
+            tile.classList.add(result[i]);
+            updateKeyboard(guess[i], result[i]);
+          }, 250);
+        }, i * 100);
+      }
+
+      setTimeout(() => {
+        if (guess === target) {
+          wordleState.won = true;
+          wordleState.gameOver = true;
+          const score = wordleState.currentRow + 1;
+          onHoleComplete(score);
+        } else if (wordleState.currentRow >= 5) {
+          wordleState.gameOver = true;
+          onHoleComplete(7); // Failed to solve
+        } else {
+          wordleState.currentRow++;
+          wordleState.currentTile = 0;
+        }
+      }, 600);
+    }
+
+    function evaluateGuess(guess, target) {
+      const result = ["absent", "absent", "absent", "absent", "absent"];
+      const targetChars = target.split("");
+      const guessChars = guess.split("");
+
+      // First pass: correct letters
+      for (let i = 0; i < 5; i++) {
+        if (guessChars[i] === targetChars[i]) {
+          result[i] = "correct";
+          targetChars[i] = null;
+          guessChars[i] = null;
+        }
+      }
+
+      // Second pass: present letters
+      for (let i = 0; i < 5; i++) {
+        if (guessChars[i] && targetChars.includes(guessChars[i])) {
+          result[i] = "present";
+          targetChars[targetChars.indexOf(guessChars[i])] = null;
+        }
+      }
+
+      return result;
+    }
+
+    function updateKeyboard(letter, state) {
+      const key = document.getElementById(`key-${letter}`);
+      if (!key) return;
+
+      const priority = { correct: 3, present: 2, absent: 1 };
+      const currentState = key.classList.contains("correct") ? "correct" :
+                          key.classList.contains("present") ? "present" :
+                          key.classList.contains("absent") ? "absent" : null;
+
+      if (!currentState || priority[state] > priority[currentState]) {
+        key.classList.remove("correct", "present", "absent");
+        key.classList.add(state);
+      }
+    }
+
+    function shakeRow() {
+      const row = document.getElementById(`row-${wordleState.currentRow}`);
+      row.classList.add("shake");
+      setTimeout(() => row.classList.remove("shake"), 400);
+      vibrate([50, 50, 50]);
+    }
+
+    // ============================================
+    // SCORING & DOUBLE DOWN
+    // ============================================
+    function onHoleComplete(score) {
+      const par = COURSES[gameState.courseId].pars[gameState.currentHole];
+      const vsPar = score - par;
+
+      // Update stats
+      gameState.stats.distribution[Math.min(score - 1, 6)]++;
+
+      document.getElementById("wordle-container").style.display = "none";
+
+      // Determine result
+      const resultBadge = document.getElementById("result-badge");
+      const resultDesc = document.getElementById("result-description");
+      const keepSubtitle = document.getElementById("keep-subtitle");
+      const doubleSubtitle = document.getElementById("double-subtitle");
+      const doubleBtn = document.getElementById("double-btn");
+
+      let resultText, resultClass;
+
+      if (score === 1) {
+        resultText = "HOLE IN ONE!";
+        resultClass = "eagle";
+        fireConfetti("gold");
+        vibrate([100, 50, 100, 50, 100, 50, 100]);
+      } else if (vsPar <= -2) {
+        resultText = "EAGLE!";
+        resultClass = "eagle";
+        fireConfetti("gold");
+        vibrate([100, 50, 100]);
+      } else if (vsPar === -1) {
+        resultText = "BIRDIE!";
+        resultClass = "birdie";
+        fireConfetti("green");
+        vibrate([50, 50, 50]);
+      } else if (vsPar === 0) {
+        resultText = "PAR";
+        resultClass = "par";
+        vibrate(50);
+      } else if (vsPar === 1) {
+        resultText = "BOGEY";
+        resultClass = "bogey";
+        vibrate([100, 100]);
+      } else {
+        resultText = score === 7 ? "NO SOLVE" : "DOUBLE BOGEY+";
+        resultClass = "double-bogey";
+        vibrate([200, 100, 200]);
+      }
+
+      resultBadge.textContent = resultText;
+      resultBadge.className = "result-badge " + resultClass;
+
+      if (score === 7) {
+        resultDesc.textContent = `You didn't solve this one. The word was ${wordleState.targetWord}`;
+      } else {
+        resultDesc.textContent = `You scored ${score} on a Par ${par}`;
+      }
+
+      // Set button subtitles
+      if (vsPar < 0) {
+        keepSubtitle.textContent = `${vsPar} stroke${vsPar < -1 ? "s" : ""}`;
+        doubleSubtitle.textContent = `${vsPar * 2} strokes`;
+        doubleBtn.classList.remove("risky");
+      } else if (vsPar > 0) {
+        keepSubtitle.textContent = `+${vsPar} stroke${vsPar > 1 ? "s" : ""}`;
+        doubleSubtitle.textContent = `+${vsPar * 2} strokes`;
+        doubleBtn.classList.add("risky");
+      } else {
+        keepSubtitle.textContent = "Even par";
+        doubleSubtitle.textContent = "No change";
+        doubleBtn.classList.remove("risky");
+      }
+
+      // Store pending score
+      wordleState.pendingScore = score;
+      wordleState.pendingVsPar = vsPar;
+
+      document.getElementById("double-down-container").classList.add("active");
+    }
+
+    function keepScore() {
+      finalizeScore(false);
+    }
+
+    function doubleDown() {
+      finalizeScore(true);
+    }
+
+    function finalizeScore(doubled) {
+      const score = wordleState.pendingScore;
+      const vsPar = wordleState.pendingVsPar;
+
+      gameState.scores[gameState.currentHole] = score;
+      gameState.doubled[gameState.currentHole] = doubled;
+
+      // Track birdies/eagles
+      if (vsPar <= -2) gameState.stats.totalEagles++;
+      else if (vsPar === -1) gameState.stats.totalBirdies++;
+
+      // Award coins
+      let coinsEarned = 0;
+      if (score === 1) coinsEarned = 100;
+      else if (vsPar <= -2) coinsEarned = 50;
+      else if (vsPar === -1) coinsEarned = 25;
+      else if (vsPar === 0) coinsEarned = 10;
+
+      if (doubled && vsPar < 0) coinsEarned *= 2;
+
+      if (coinsEarned > 0) {
+        gameState.coins += coinsEarned;
+        showToast(`+${coinsEarned} coins!`, "success");
+      }
+
+      saveState();
+      updateDisplay();
+      renderScorecard();
+
+      document.getElementById("double-down-container").classList.remove("active");
+
+      // Show completion or game over
+      if (gameState.currentHole >= 17) {
+        showGameOver();
+      } else {
+        showHoleComplete(doubled);
+      }
+    }
+
+    function showHoleComplete(doubled) {
+      const vsPar = wordleState.pendingVsPar;
+      const effectiveVsPar = doubled ? vsPar * 2 : vsPar;
+
+      const icon = document.getElementById("complete-icon");
+      const title = document.getElementById("complete-title");
+      const subtitle = document.getElementById("complete-subtitle");
+
+      if (effectiveVsPar <= -2) {
+        icon.textContent = "🦅";
+        title.textContent = doubled ? "DOUBLED EAGLE!" : "Eagle!";
+      } else if (effectiveVsPar === -1) {
+        icon.textContent = "🐦";
+        title.textContent = "Birdie!";
+      } else if (effectiveVsPar === 0) {
+        icon.textContent = "⛳";
+        title.textContent = "Par";
+      } else {
+        icon.textContent = "😅";
+        title.textContent = "Keep grinding!";
+      }
+
+      if (doubled) {
+        subtitle.textContent = `Double down: ${effectiveVsPar >= 0 ? "+" : ""}${effectiveVsPar} strokes`;
+      } else {
+        subtitle.textContent = "Score recorded";
+      }
+
+      document.getElementById("hole-complete").classList.add("active");
+    }
+
+    function nextHole() {
+      gameState.currentHole++;
+      saveState();
+      updateDisplay();
+      startNewHole();
+    }
+
+    function showGameOver() {
+      // Calculate final score
+      const totalStrokes = gameState.scores.reduce((a, b) => a + (b || 0), 0);
+      const totalPar = COURSES[gameState.courseId].pars.reduce((a, b) => a + b, 0);
+
+      let doubleDownAdj = 0;
+      for (let i = 0; i < 18; i++) {
+        if (gameState.doubled[i] && gameState.scores[i] !== null) {
+          const vsPar = gameState.scores[i] - COURSES[gameState.courseId].pars[i];
+          doubleDownAdj += vsPar;
+        }
+      }
+
+      const finalVsPar = (totalStrokes - totalPar) + doubleDownAdj;
+
+      // Update stats
+      gameState.stats.played++;
+      if (gameState.stats.bestRound === null || finalVsPar < gameState.stats.bestRound) {
+        gameState.stats.bestRound = finalVsPar;
+      }
+
+      // Calculate coins earned
+      let coinsEarned = 50; // Base completion bonus
+      if (finalVsPar < 0) coinsEarned += Math.abs(finalVsPar) * 20;
+      if (finalVsPar <= -5) coinsEarned += 100; // Great round bonus
+
+      gameState.coins += coinsEarned;
+      saveState();
+
+      // Display
+      const scoreEl = document.getElementById("final-score");
+      scoreEl.textContent = finalVsPar === 0 ? "E" : (finalVsPar > 0 ? `+${finalVsPar}` : finalVsPar);
+      scoreEl.className = "final-score " + (finalVsPar < 0 ? "under" : finalVsPar > 0 ? "over" : "even");
+
+      document.getElementById("coins-earned").innerHTML = `<span>🪙</span><span>+${coinsEarned} coins earned!</span>`;
+
+      if (finalVsPar <= -5) fireConfetti("gold");
+      else if (finalVsPar < 0) fireConfetti("green");
+
+      document.getElementById("game-over-screen").classList.add("active");
+      updateDisplay();
+      renderStats();
+    }
+
+    function newRound() {
+      gameState.currentHole = 0;
+      gameState.scores = Array(18).fill(null);
+      gameState.doubled = Array(18).fill(false);
+      saveState();
+      updateDisplay();
+      renderScorecard();
+      startNewHole();
+    }
+
+    // ============================================
+    // DISPLAY UPDATES
+    // ============================================
+    function updateDisplay() {
+      document.getElementById("coin-count").textContent = gameState.coins;
+      document.getElementById("course-name").textContent = COURSES[gameState.courseId].name;
+      document.getElementById("current-hole").textContent = gameState.currentHole + 1;
+      document.getElementById("current-par").textContent = COURSES[gameState.courseId].pars[gameState.currentHole];
+
+      // Calculate totals
+      const totalStrokes = gameState.scores.reduce((a, b) => a + (b || 0), 0);
+      const holesPlayed = gameState.scores.filter(s => s !== null).length;
+      const parForPlayedHoles = COURSES[gameState.courseId].pars.slice(0, holesPlayed).reduce((a, b) => a + b, 0);
+
+      let doubleDownAdj = 0;
+      for (let i = 0; i < holesPlayed; i++) {
+        if (gameState.doubled[i] && gameState.scores[i] !== null) {
+          const vsPar = gameState.scores[i] - COURSES[gameState.courseId].pars[i];
+          doubleDownAdj += vsPar;
+        }
+      }
+
+      const vsPar = holesPlayed > 0 ? (totalStrokes - parForPlayedHoles) + doubleDownAdj : 0;
+
+      document.getElementById("total-strokes").textContent = totalStrokes;
+
+      const vsParEl = document.getElementById("vs-par");
+      if (vsPar === 0) {
+        vsParEl.textContent = "E";
+        vsParEl.className = "score-value even";
+      } else if (vsPar < 0) {
+        vsParEl.textContent = vsPar;
+        vsParEl.className = "score-value under";
+      } else {
+        vsParEl.textContent = `+${vsPar}`;
+        vsParEl.className = "score-value over";
+      }
+
+      document.getElementById("double-count").textContent = gameState.doubled.filter(d => d).length;
+    }
+
+    function renderScorecard() {
+      const grid = document.getElementById("scorecard-grid");
+      const pars = COURSES[gameState.courseId].pars;
+
+      // Front 9
+      let html = "";
+
+      // Hole numbers
+      for (let i = 0; i < 9; i++) {
+        html += `<div class="sc-cell sc-header">${i + 1}</div>`;
+      }
+
+      // Par values
+      for (let i = 0; i < 9; i++) {
+        html += `<div class="sc-cell sc-par">${pars[i]}</div>`;
+      }
+
+      // Scores
+      for (let i = 0; i < 9; i++) {
+        const score = gameState.scores[i];
+        const doubled = gameState.doubled[i];
+
+        if (score === null) {
+          html += `<div class="sc-cell sc-score pending">-</div>`;
+        } else {
+          const vsPar = score - pars[i];
+          let scoreClass = "par";
+          if (vsPar <= -2) scoreClass = "eagle";
+          else if (vsPar === -1) scoreClass = "birdie";
+          else if (vsPar === 1) scoreClass = "bogey";
+          else if (vsPar >= 2) scoreClass = "double-bogey";
+
+          const doubledClass = doubled ? " sc-doubled" : "";
+          html += `<div class="sc-cell sc-score ${scoreClass}${doubledClass}">${score}</div>`;
+        }
+      }
+
+      // Back 9 (holes 10-18)
+      for (let i = 9; i < 18; i++) {
+        html += `<div class="sc-cell sc-header">${i + 1}</div>`;
+      }
+
+      for (let i = 9; i < 18; i++) {
+        html += `<div class="sc-cell sc-par">${pars[i]}</div>`;
+      }
+
+      for (let i = 9; i < 18; i++) {
+        const score = gameState.scores[i];
+        const doubled = gameState.doubled[i];
+
+        if (score === null) {
+          html += `<div class="sc-cell sc-score pending">-</div>`;
+        } else {
+          const vsPar = score - pars[i];
+          let scoreClass = "par";
+          if (vsPar <= -2) scoreClass = "eagle";
+          else if (vsPar === -1) scoreClass = "birdie";
+          else if (vsPar === 1) scoreClass = "bogey";
+          else if (vsPar >= 2) scoreClass = "double-bogey";
+
+          const doubledClass = doubled ? " sc-doubled" : "";
+          html += `<div class="sc-cell sc-score ${scoreClass}${doubledClass}">${score}</div>`;
+        }
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function renderStats() {
+      document.getElementById("stat-played").textContent = gameState.stats.played;
+      document.getElementById("stat-best").textContent = gameState.stats.bestRound !== null ?
+        (gameState.stats.bestRound === 0 ? "E" : gameState.stats.bestRound > 0 ? `+${gameState.stats.bestRound}` : gameState.stats.bestRound) : "--";
+      document.getElementById("stat-birdies").textContent = gameState.stats.totalBirdies;
+      document.getElementById("stat-eagles").textContent = gameState.stats.totalEagles;
+
+      // Distribution
+      const dist = document.getElementById("distribution");
+      const maxCount = Math.max(...gameState.stats.distribution, 1);
+
+      let html = "";
+      for (let i = 0; i < 7; i++) {
+        const count = gameState.stats.distribution[i];
+        const pct = (count / maxCount) * 100;
+        const label = i === 6 ? "X" : (i + 1);
+        const highlight = count === maxCount && count > 0 ? " highlight" : "";
+
+        html += `
+          <div class="distribution-row">
+            <div class="dist-label">${label}</div>
+            <div class="dist-bar">
+              <div class="dist-fill${highlight}" style="width: ${Math.max(pct, 8)}%">${count}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      dist.innerHTML = html;
+    }
+
+    function renderCourseList() {
+      const list = document.getElementById("course-list");
+      let html = "";
+
+      for (const [id, course] of Object.entries(COURSES)) {
+        const totalPar = course.pars.reduce((a, b) => a + b, 0);
+        const selected = id === gameState.courseId ? " selected" : "";
+
+        html += `
+          <div class="course-card${selected}" onclick="selectCourse('${id}')">
+            <div class="course-card-name">${course.name}</div>
+            <div class="course-card-info">18 Holes • Par ${totalPar}</div>
+          </div>
+        `;
+      }
+
+      list.innerHTML = html;
+    }
+
+    function selectCourse(courseId) {
+      if (gameState.scores.some(s => s !== null)) {
+        showModal(
+          "⚠️",
+          "Change Course?",
+          "Switching courses will reset your current round. Continue?",
+          [
+            { text: "Cancel", class: "secondary", action: () => hideModal() },
+            { text: "Switch", class: "primary", action: () => {
+              gameState.courseId = courseId;
+              newRound();
+              hideModal();
+              showTab("play");
+              renderCourseList();
+            }}
+          ]
+        );
+      } else {
+        gameState.courseId = courseId;
+        saveState();
+        updateDisplay();
+        renderScorecard();
+        renderCourseList();
+        showTab("play");
+      }
+    }
+
+    // ============================================
+    // UI HELPERS
+    // ============================================
+    function showTab(tab) {
+      document.querySelectorAll(".tab").forEach((t, i) => {
+        t.classList.toggle("active", ["play", "courses", "stats"][i] === tab);
+      });
+
+      document.getElementById("play-screen").style.display = tab === "play" ? "block" : "none";
+      document.getElementById("stats-screen").classList.toggle("active", tab === "stats");
+      document.getElementById("course-select-screen").classList.toggle("active", tab === "courses");
+    }
+
+    function showStats() {
+      showTab("stats");
+    }
+
+    function hideStats() {
+      showTab("play");
+    }
+
+    function showToast(message, type = "") {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "toast " + type + " show";
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function showModal(icon, title, text, buttons) {
+      const modal = document.getElementById("modal");
+
+      let buttonsHtml = "";
+      buttons.forEach(btn => {
+        buttonsHtml += `<button class="modal-btn ${btn.class}" onclick="(${btn.action.toString()})()">${btn.text}</button>`;
+      });
+
+      modal.innerHTML = `
+        <div class="modal-icon">${icon}</div>
+        <div class="modal-title">${title}</div>
+        <div class="modal-text">${text}</div>
+        ${buttonsHtml}
+      `;
+
+      document.getElementById("modal-backdrop").classList.add("active");
+    }
+
+    function hideModal() {
+      document.getElementById("modal-backdrop").classList.remove("active");
+    }
+
+    function vibrate(pattern) {
+      if (navigator.vibrate) {
+        navigator.vibrate(pattern);
+      }
+    }
+
+    // ============================================
+    // CONFETTI
+    // ============================================
+    function fireConfetti(type) {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = type === "gold" ?
+        ["#ffd700", "#ffb347", "#ff9500", "#fff4b3"] :
+        ["#30d158", "#34c759", "#00c853", "#a8e6cf"];
+
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 20,
+          vy: (Math.random() - 0.5) * 20 - 10,
+          size: Math.random() * 10 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frame = 0;
+      const maxFrames = 120;
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.5;
+          p.rotation += p.rotationSpeed;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation * Math.PI / 180);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = 1 - (frame / maxFrames);
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frame++;
+        if (frame < maxFrames) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      animate();
+    }
+
+    // ============================================
+    // KEYBOARD INPUT
+    // ============================================
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        handleKeyPress("ENTER");
+      } else if (e.key === "Backspace") {
+        handleKeyPress("⌫");
+      } else if (/^[a-zA-Z]$/.test(e.key)) {
+        handleKeyPress(e.key.toUpperCase());
+      }
     });
 
-    // Toggle confidence on concept A
-    document.querySelectorAll('.score-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-      });
-    });
+    // ============================================
+    // START
+    // ============================================
+    init();
   </script>
-
 </body>
 </html>
