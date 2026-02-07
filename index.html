@@ -1,1 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pardle Gameplay Mockups</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <style>
+    :root {
+      --bg: #000000;
+      --bg-card: #1c1c1e;
+      --bg-card-elevated: #2c2c2e;
+      --text: #f5f5f5;
+      --text-muted: #8e8e93;
+      --accent: #ff9800;
+      --accent-soft: rgba(255, 152, 0, 0.20);
+      --green: #00c853;
+      --green-soft: rgba(0, 200, 83, 0.15);
+      --red: #ff453a;
+      --border-soft: #38383a;
+      --yellow: #ffcc00;
+    }
 
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Concept Tabs */
+    .concept-tabs {
+      display: flex;
+      background: var(--bg-card);
+      border-bottom: 0.5px solid var(--border-soft);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 8px 8px 0;
+      gap: 4px;
+    }
+
+    .concept-tab {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .concept-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .concept-page {
+      display: none;
+      padding: 16px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .concept-page.active {
+      display: block;
+    }
+
+    .concept-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+
+    .concept-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Shared Components */
+    .phone-frame {
+      background: var(--bg);
+      border: 2px solid var(--border-soft);
+      border-radius: 24px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-card);
+    }
+
+    .app-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .coin-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-card-elevated);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--yellow);
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: var(--bg-card-elevated);
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .game-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      margin: 8px;
+      border-radius: 12px;
+    }
+
+    .course-name {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .course-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .hole-card {
+      background: var(--bg-card);
+      margin: 8px;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hole-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .hole-number {
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .hole-of {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hole-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .hole-stat {
+      text-align: center;
+    }
+
+    .hole-stat-value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .hole-stat-value.timer {
+      color: var(--green);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hole-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .chat-fab {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--green);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-fab svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .section-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 16px 0 8px;
+    }
+
+    .score-buttons {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 8px;
+    }
+
+    .score-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .score-btn:active {
+      transform: scale(0.95);
+    }
+
+    .score-btn.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .score-btn.under-par {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .primary-btn {
+      width: calc(100% - 16px);
+      margin: 16px 8px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #000;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .primary-btn:disabled {
+      opacity: 0.35;
+    }
+
+    .primary-btn.green {
+      background: var(--green);
+    }
+
+    .secondary-btn {
+      width: calc(100% - 16px);
+      margin: 0 8px 16px;
+      padding: 14px;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 14px;
+      background: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Concept A Specific */
+    .confidence-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      margin: 12px 8px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1.5px solid var(--border-soft);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .confidence-toggle.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .confidence-toggle .bolt {
+      font-size: 20px;
+    }
+
+    .confidence-toggle .label {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .confidence-toggle .hint {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .confidence-toggle.active .hint {
+      color: var(--accent);
+    }
+
+    /* Concept B Specific */
+    .tap-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 8px 0 4px;
+    }
+
+    .score-btn-b {
+      width: 48px;
+      height: 56px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .score-btn-b .boost-indicator {
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .score-btn-b.boosted {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .score-btn-b.boosted .boost-indicator {
+      opacity: 1;
+    }
+
+    /* Concept D Specific */
+    .result-display {
+      text-align: center;
+      padding: 24px;
+      background: var(--bg-card);
+      margin: 8px;
+      border-radius: 16px;
+    }
+
+    .result-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .result-score {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .result-score.over {
+      color: var(--red);
+    }
+
+    .result-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .choice-buttons {
+      display: flex;
+      gap: 10px;
+      padding: 0 8px;
+      margin-top: 16px;
+    }
+
+    .choice-btn {
+      flex: 1;
+      padding: 16px 12px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .choice-btn.keep {
+      background: var(--bg-card-elevated);
+      color: var(--text);
+      border: 1.5px solid var(--border-soft);
+    }
+
+    .choice-btn.double {
+      background: linear-gradient(135deg, var(--accent), #ff6d00);
+      color: #000;
+    }
+
+    .choice-btn .sub {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    /* Pros/Cons */
+    .pros-cons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .pros, .cons {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .pros {
+      background: rgba(0, 200, 83, 0.1);
+      border: 1px solid rgba(0, 200, 83, 0.3);
+    }
+
+    .cons {
+      background: rgba(255, 69, 58, 0.1);
+      border: 1px solid rgba(255, 69, 58, 0.3);
+    }
+
+    .pros-title, .cons-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pros-title { color: var(--green); }
+    .cons-title { color: var(--red); }
+
+    .pros ul, .cons ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .flow-step {
+      background: var(--bg-card);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .flow-arrow {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="concept-tabs">
+    <button class="concept-tab active" onclick="showConcept('a')">A: Post-Play Bet</button>
+    <button class="concept-tab" onclick="showConcept('b')">B: One-Tap</button>
+    <button class="concept-tab" onclick="showConcept('d')">C: Double Down</button>
+  </div>
+
+  <!-- CONCEPT A: Post-Play Confidence Bet -->
+  <div id="concept-a" class="concept-page active">
+    <div class="concept-title">Option A: Post-Play Confidence Bet</div>
+    <div class="concept-desc">
+      Play Wordle first, then enter your score. Optionally add a Confidence Bet before submitting to amplify your result.
+    </div>
+
+    <div class="flow">
+      <span class="flow-step">Play Wordle</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Enter Score</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Bet? (optional)</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Submit</span>
+    </div>
+
+    <div class="phone-frame">
+      <div class="app-header">
+        <div class="app-title">Pardle</div>
+        <div class="header-right">
+          <div class="coin-pill">🪙 250</div>
+          <button class="icon-btn">⚙</button>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <div>
+          <div class="course-name">Course</div>
+          <div class="course-title">St. Androos Links</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:600;">0/18</div>
+          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
+        </div>
+      </div>
+
+      <div class="hole-card">
+        <button class="chat-fab">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </button>
+        <div class="hole-label">Today's Hole</div>
+        <div class="hole-number">1</div>
+        <div class="hole-of">of 18</div>
+        <div class="hole-stats">
+          <div class="hole-stat">
+            <div class="hole-stat-value">4</div>
+            <div class="hole-stat-label">Par</div>
+          </div>
+          <div class="hole-stat">
+            <div class="hole-stat-value timer">21:28</div>
+            <div class="hole-stat-label">Time Left</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">What did you score?</div>
+
+      <div class="score-buttons">
+        <button class="score-btn">1</button>
+        <button class="score-btn">2</button>
+        <button class="score-btn selected">3</button>
+        <button class="score-btn">4</button>
+        <button class="score-btn">5</button>
+        <button class="score-btn">6</button>
+        <button class="score-btn">7</button>
+      </div>
+
+      <div class="confidence-toggle" onclick="this.classList.toggle('active')">
+        <span class="bolt">⚡</span>
+        <div>
+          <div class="label">Confidence Bet</div>
+          <div class="hint">Double your bonus (or penalty)</div>
+        </div>
+      </div>
+
+      <button class="primary-btn">Submit Score</button>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">Pros</div>
+        <ul>
+          <li>No prediction phase</li>
+          <li>Decide AFTER you know your result</li>
+          <li>Familiar golf scoring flow</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">Cons</div>
+        <ul>
+          <li>Less "prediction" skill element</li>
+          <li>Players might always bet when under par</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT B: One-Tap -->
+  <div id="concept-b" class="concept-page">
+    <div class="concept-title">Option B: One-Tap Score Entry</div>
+    <div class="concept-desc">
+      Tap to enter your score normally. Long-press to enter with Confidence Bet. No separate toggle, no phases — just one action.
+    </div>
+
+    <div class="flow">
+      <span class="flow-step">Play Wordle</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Tap or Long-Press</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Done</span>
+    </div>
+
+    <div class="phone-frame">
+      <div class="app-header">
+        <div class="app-title">Pardle</div>
+        <div class="header-right">
+          <div class="coin-pill">🪙 250</div>
+          <button class="icon-btn">⚙</button>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <div>
+          <div class="course-name">Course</div>
+          <div class="course-title">St. Androos Links</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:600;">0/18</div>
+          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
+        </div>
+      </div>
+
+      <div class="hole-card">
+        <button class="chat-fab">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </button>
+        <div class="hole-label">Today's Hole</div>
+        <div class="hole-number">1</div>
+        <div class="hole-of">of 18</div>
+        <div class="hole-stats">
+          <div class="hole-stat">
+            <div class="hole-stat-value">4</div>
+            <div class="hole-stat-label">Par</div>
+          </div>
+          <div class="hole-stat">
+            <div class="hole-stat-value timer">21:28</div>
+            <div class="hole-stat-label">Time Left</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">What did you score?</div>
+      <div class="tap-hint">Tap = normal · Long-press = with ⚡ Confidence Bet</div>
+
+      <div class="score-buttons">
+        <button class="score-btn-b">1</button>
+        <button class="score-btn-b">2</button>
+        <button class="score-btn-b boosted"><span>3</span><span class="boost-indicator">⚡</span></button>
+        <button class="score-btn-b">4</button>
+        <button class="score-btn-b">5</button>
+        <button class="score-btn-b">6</button>
+        <button class="score-btn-b">7</button>
+      </div>
+
+      <div style="text-align:center; margin-top:20px; padding:16px; background:var(--accent-soft); border-radius:12px; margin:16px 8px;">
+        <div style="font-size:13px; color:var(--text-muted);">Score submitted</div>
+        <div style="font-size:24px; font-weight:700; color:var(--green);">Birdie! -1</div>
+        <div style="font-size:13px; color:var(--accent);">⚡ Confidence Bet: -2 total</div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">Pros</div>
+        <ul>
+          <li>Fastest possible flow</li>
+          <li>Single action does everything</li>
+          <li>Very clean UI</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">Cons</div>
+        <ul>
+          <li>Long-press not obvious to all users</li>
+          <li>Accidental taps could happen</li>
+          <li>Need confirmation or undo?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT D: Double Down -->
+  <div id="concept-d" class="concept-page">
+    <div class="concept-title">Option C: Post-Score Double Down</div>
+    <div class="concept-desc">
+      Enter your score, see your result, THEN decide if you want to "Double Down" and amplify it. Two clear choices: Keep or Double.
+    </div>
+
+    <div class="flow">
+      <span class="flow-step">Play Wordle</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Enter Score</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">See Result</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Keep or Double</span>
+    </div>
+
+    <div class="phone-frame">
+      <div class="app-header">
+        <div class="app-title">Pardle</div>
+        <div class="header-right">
+          <div class="coin-pill">🪙 250</div>
+          <button class="icon-btn">⚙</button>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <div>
+          <div class="course-name">Course</div>
+          <div class="course-title">St. Androos Links</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:600;">0/18</div>
+          <div style="font-size:11px; color:var(--text-muted);">2 players</div>
+        </div>
+      </div>
+
+      <div class="hole-card">
+        <button class="chat-fab">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </button>
+        <div class="hole-label">Hole 1 Result</div>
+        <div class="hole-number" style="font-size:48px;">Birdie!</div>
+        <div style="font-size:14px; color:var(--text-muted); margin-bottom:16px;">You scored 3 on a Par 4</div>
+      </div>
+
+      <div class="result-display">
+        <div class="result-label">Your current score</div>
+        <div class="result-score">-1</div>
+        <div class="result-desc">1 stroke under par</div>
+      </div>
+
+      <div style="padding:0 8px;">
+        <div style="text-align:center; font-size:13px; color:var(--text-muted); margin:12px 0 8px;">What do you want to do?</div>
+        <div class="choice-buttons">
+          <button class="choice-btn keep">
+            Keep It
+            <span class="sub">Lock in -1</span>
+          </button>
+          <button class="choice-btn double">
+            ⚡ Double Down
+            <span class="sub">Risk it for -2</span>
+          </button>
+        </div>
+        <div style="text-align:center; font-size:11px; color:var(--text-muted); margin-top:10px;">
+          Double Down: Doubles bonus if under par, doubles penalty if over
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="pros-title">Pros</div>
+        <ul>
+          <li>Crystal clear choices</li>
+          <li>See result before deciding</li>
+          <li>Feels like a casino "double down"</li>
+          <li>Dramatic moment each hole</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="cons-title">Cons</div>
+        <ul>
+          <li>One extra step vs Option A</li>
+          <li>No risk if you always "Keep" when over par</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showConcept(id) {
+      document.querySelectorAll('.concept-page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.concept-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('concept-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Simulate long-press on concept B
+    document.querySelectorAll('.score-btn-b').forEach(btn => {
+      let timer;
+      btn.addEventListener('touchstart', () => {
+        timer = setTimeout(() => {
+          document.querySelectorAll('.score-btn-b').forEach(b => b.classList.remove('boosted'));
+          btn.classList.add('boosted');
+        }, 500);
+      });
+      btn.addEventListener('touchend', () => clearTimeout(timer));
+      btn.addEventListener('click', () => {
+        if (!btn.classList.contains('boosted')) {
+          document.querySelectorAll('.score-btn-b').forEach(b => b.classList.remove('boosted'));
+        }
+      });
+    });
+
+    // Toggle confidence on concept A
+    document.querySelectorAll('.score-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+    });
+  </script>
+
+</body>
+</html>
